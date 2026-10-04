@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+:root {
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading);
+  font-weight: 600;
+}
+
+code, pre {
+  font-family: var(--mono);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Prose styles for explanation text */
+.prose {
+  color: #374151;
+}
+
+.prose p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.prose strong {
+  font-weight: 600;
+}

@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: thermalift-backend
+    runtime: python
+    buildCommand: "pip install -e ."
+    startCommand: "uvicorn app.api.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: "8000"
+      - key: CORS_ORIGINS
+        value: "https://your-frontend.netlify.app,http://localhost:5173,http://localhost:3000"
+      - key: PYTHONPATH
+        value: "."
+    healthCheckPath: /api/v1/health
+    autoDeploy: false

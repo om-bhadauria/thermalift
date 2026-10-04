@@ -1,0 +1,52 @@
+{
+  "production_forecaster": {
+    "train_metrics": {
+      "train_mae": 1.813339077970106,
+      "train_rmse": 2.3948598708909508,
+      "train_r2": 0.9792962794039219,
+      "n_samples": 960,
+      "n_features": 22
+    },
+    "test_metrics": {
+      "test_mae": 4.711540757643695,
+      "test_rmse": 6.010506076466747,
+      "test_r2": -0.2062282244148168,
+      "n_samples": 240
+    },
+    "feature_count": 22
+  },
+  "risk_predictor_rod_float_risk": {
+    "train_metrics": {
+      "train_mae": 0.017698589448147773,
+      "train_rmse": 0.022224284135734854,
+      "train_r2": 0.7141573180505467,
+      "n_samples": 960,
+      "n_features": 22,
+      "risk_target": "rod_float_risk"
+    },
+    "test_metrics": {
+      "test_mae": 0.029573078996802876,
+      "test_rmse": 0.03354782364577893,
+      "test_r2": -0.31546956387413627,
+      "n_samples": 240
+    },
+    "feature_count": 22
+  },
+  "risk_predictor_impact_loading_risk": {
+    "train_metrics": {
+      "train_mae": 0.021636004264943318,
+      "train_rmse": 0.02762980579698263,
+      "train_r2": 0.8141649302284472,
+      "n_samples": 960,
+      "n_features": 22,
+      "risk_target": "impact_loading_risk"
+    },
+    "test_metrics": {
+      "test_mae": 0.043718772116284624,
+      "test_rmse": 0.05410709647443754,
+      "test_r2": -0.08760800385479439,
+      "n_samples": 240
+    },
+    "feature_count": 22
+  }
+}
