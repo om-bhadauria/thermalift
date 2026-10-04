@@ -9,7 +9,7 @@ services:
         value: 3.11.0
       - key: PORT
         value: "8000"
-      - key: CORS_ORIGINS
+      - key: CORS_ORIGINS_RAW
         value: "https://thermalift.netlify.app,http://localhost:5173,http://localhost:3000"
       - key: PYTHONPATH
         value: "."

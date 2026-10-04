@@ -13,9 +13,12 @@ class Settings(BaseSettings):
     SYNTHETIC_DATA_SEED: int = 42
     DEMO_MODE: bool = True
     
-    # CORS_ORIGINS can be set via env var as comma-separated string
-    # e.g., CORS_ORIGINS="https://frontend.netlify.app,http://localhost:5173"
-    CORS_ORIGINS: List[str] = [
+    # CORS_ORIGINS_RAW is the env var name (comma-separated string)
+    # This avoids Pydantic trying to parse it as JSON list
+    CORS_ORIGINS_RAW: Optional[str] = None
+    
+    # Default fallback origins
+    _DEFAULT_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
         "http://localhost:5173",
         "http://127.0.0.1:3000",
@@ -28,11 +31,11 @@ class Settings(BaseSettings):
     
     @property
     def cors_origins_list(self) -> List[str]:
-        """Parse CORS_ORIGINS from env var if set, otherwise use default list."""
-        env_origins = os.getenv("CORS_ORIGINS")
+        """Parse CORS_ORIGINS_RAW from env var if set, otherwise use default list."""
+        env_origins = self.CORS_ORIGINS_RAW or os.getenv("CORS_ORIGINS")
         if env_origins:
-            return [origin.strip() for origin in env_origins.split(",")]
-        return self.CORS_ORIGINS
+            return [origin.strip() for origin in env_origins.split(",") if origin.strip()]
+        return self._DEFAULT_CORS_ORIGINS
 
 
 settings = Settings()

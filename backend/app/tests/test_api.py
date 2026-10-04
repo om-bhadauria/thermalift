@@ -477,6 +477,25 @@ class TestCORS:
             }
         )
         assert response.headers.get("access-control-allow-credentials") == "true"
+    
+    def test_cors_middleware_allow_origins_configured(self, client):
+        """Test that CORSMiddleware has production origins in allow_origins."""
+        app = client.app
+        cors_middleware = None
+        for middleware in app.user_middleware:
+            if middleware.cls.__name__ == "CORSMiddleware":
+                cors_middleware = middleware
+                break
+        
+        assert cors_middleware is not None, "CORSMiddleware not found"
+        allow_origins = cors_middleware.options.get("allow_origins", [])
+        
+        assert "https://thermalift.netlify.app" in allow_origins, \
+            f"Production origin missing from allow_origins: {allow_origins}"
+        assert "http://localhost:5173" in allow_origins, \
+            f"Localhost origin missing from allow_origins: {allow_origins}"
+        assert "http://localhost:3000" in allow_origins, \
+            f"Localhost 3000 origin missing from allow_origins: {allow_origins}"
 
 
 class TestAPIDocs:
