@@ -394,6 +394,91 @@ class TestRootEndpoint:
         assert data["data_policy"] == "SYNTHETIC/DEMO"
 
 
+class TestCORS:
+    """Test CORS configuration."""
+    
+    def test_cors_preflight_allowed_origin(self, client):
+        """Test CORS preflight request with allowed origin."""
+        response = client.options(
+            "/api/v1/health",
+            headers={
+                "Origin": "https://thermalift.netlify.app",
+                "Access-Control-Request-Method": "GET",
+            }
+        )
+        assert response.status_code == 200
+        assert response.headers.get("access-control-allow-origin") == "https://thermalift.netlify.app"
+        assert "access-control-allow-methods" in response.headers
+        assert "access-control-allow-headers" in response.headers
+    
+    def test_cors_preflight_localhost_origin(self, client):
+        """Test CORS preflight request with localhost origin."""
+        response = client.options(
+            "/api/v1/health",
+            headers={
+                "Origin": "http://localhost:5173",
+                "Access-Control-Request-Method": "GET",
+            }
+        )
+        assert response.status_code == 200
+        assert response.headers.get("access-control-allow-origin") == "http://localhost:5173"
+    
+    def test_cors_actual_request_allowed_origin(self, client):
+        """Test actual GET request with allowed origin returns CORS headers."""
+        response = client.get(
+            "/api/v1/health",
+            headers={"Origin": "https://thermalift.netlify.app"}
+        )
+        assert response.status_code == 200
+        assert response.headers.get("access-control-allow-origin") == "https://thermalift.netlify.app"
+    
+    def test_cors_actual_request_localhost_origin(self, client):
+        """Test actual GET request with localhost origin returns CORS headers."""
+        response = client.get(
+            "/api/v1/health",
+            headers={"Origin": "http://localhost:5173"}
+        )
+        assert response.status_code == 200
+        assert response.headers.get("access-control-allow-origin") == "http://localhost:5173"
+    
+    def test_cors_simulation_endpoint(self, client):
+        """Test CORS headers on simulation POST endpoint."""
+        response = client.options(
+            "/api/v1/simulation",
+            headers={
+                "Origin": "https://thermalift.netlify.app",
+                "Access-Control-Request-Method": "POST",
+                "Access-Control-Request-Headers": "Content-Type",
+            }
+        )
+        assert response.status_code == 200
+        assert response.headers.get("access-control-allow-origin") == "https://thermalift.netlify.app"
+    
+    def test_cors_optimization_endpoint(self, client):
+        """Test CORS headers on optimization POST endpoint."""
+        response = client.options(
+            "/api/v1/optimization",
+            headers={
+                "Origin": "https://thermalift.netlify.app",
+                "Access-Control-Request-Method": "POST",
+                "Access-Control-Request-Headers": "Content-Type",
+            }
+        )
+        assert response.status_code == 200
+        assert response.headers.get("access-control-allow-origin") == "https://thermalift.netlify.app"
+    
+    def test_cors_credentials_allowed(self, client):
+        """Test that credentials are allowed for allowed origins."""
+        response = client.options(
+            "/api/v1/health",
+            headers={
+                "Origin": "https://thermalift.netlify.app",
+                "Access-Control-Request-Method": "GET",
+            }
+        )
+        assert response.headers.get("access-control-allow-credentials") == "true"
+
+
 class TestAPIDocs:
     """Test API documentation accessibility."""
     
